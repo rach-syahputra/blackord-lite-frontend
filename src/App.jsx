@@ -4,8 +4,9 @@ import {
   Outlet,
   Route
 } from 'react-router-dom'
-import HomePage from './pages/Home'
-import RegisterPage from './pages/Register'
+import HomePage from './view/home/HomePage'
+import RegisterPage from './view/auth/register/RegisterPage'
+import RegisterListenerPage from './view/auth/register/listener/RegisterListenerPage'
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <RegisterPage />
+  },
+  {
+    path: '/register/listener',
+    element: <RegisterListenerPage />
   }
 ])
 

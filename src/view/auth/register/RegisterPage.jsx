@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import validate from '../utils/validation/validation'
-import registerSchema from '../utils/validation/register-form'
-import RadioInput from '../components/RadioInput'
-import userService from '../api-resources/user/service'
+import Input from '../../../components/Input'
+import Button from '../../../components/Button'
+import validate from '../../../utils/validation/validation'
+import registerSchema from '../../../utils/validation/register-form'
+import RadioInput from '../../../components/RadioInput'
+import userService from '../../../api-resources/user/service'
 
 const RegisterPage = () => {
   const [inputs, setInputs] = useState({
