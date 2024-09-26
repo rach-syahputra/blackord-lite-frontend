@@ -1,13 +1,9 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Outlet,
-  Route
-} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './view/home/HomePage'
 import RegisterPage from './view/auth/register/RegisterPage'
 import RegisterListenerPage from './view/auth/register/listener/RegisterListenerPage'
 import LoginPage from './view/auth/login/LoginPage'
+import RegisterArtistPage from './view/auth/register/artist/RegisterArtistPage'
 import Layout from './view/Layout'
 
 const router = createBrowserRouter([
@@ -28,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/auth/register/listener',
     element: <RegisterListenerPage />
+  },
+  {
+    path: '/auth/register/artist',
+    element: <RegisterArtistPage />
   },
   {
     path: '/auth/login',
