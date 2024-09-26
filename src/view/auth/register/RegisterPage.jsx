@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import validate from '../../../utils/validation/validation'
+import { registerSchema } from '../../../utils/validation/register-form'
 import Input from '../../../components/Input'
 import Button from '../../../components/Button'
-import validate from '../../../utils/validation/validation'
-import registerSchema from '../../../utils/validation/register-form'
 import RadioInput from '../../../components/RadioInput'
-import userService from '../../../api-resources/user/service'
 
 const RegisterPage = () => {
   const [inputs, setInputs] = useState({
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
     roleId: 0
   })
   const [error, setError] = useState('')
@@ -36,11 +36,12 @@ const RegisterPage = () => {
 
     setError('')
 
-    const registerUser = await userService.register(inputs)
-    if (registerUser.success) {
-      navigate('/')
-    } else {
-      setError('All fields are required')
+    localStorage.setItem('blackord-user-data', JSON.stringify(inputs))
+
+    if (inputs.roleId === 1) {
+      navigate('/auth/register/listener')
+    } else if (inputs.roleId === 2) {
+      navigate('/auth/register/artist')
     }
   }
 
@@ -52,9 +53,30 @@ const RegisterPage = () => {
       >
         <h1 className='text-xl font-bold'>Sign up to Blackord</h1>
         <div className='flex w-full flex-col gap-4'>
-          <Input name='username' type='text' onChange={handleChange} />
-          <Input name='email' type='email' onChange={handleChange} />
-          <Input name='password' type='password' onChange={handleChange} />
+          <Input
+            name='username'
+            type='text'
+            placeholder='username'
+            onChange={handleChange}
+          />
+          <Input
+            name='email'
+            type='email'
+            placeholder='email'
+            onChange={handleChange}
+          />
+          <Input
+            name='password'
+            type='password'
+            placeholder='password'
+            onChange={handleChange}
+          />
+          <Input
+            name='confirmPassword'
+            type='password'
+            placeholder='confirm password'
+            onChange={handleChange}
+          />
 
           <div className='flex flex-col gap-2'>
             <p>Choose your role:</p>
