@@ -9,7 +9,14 @@ const userService = {
       if (response.status === 201) return { success: true }
     } catch (error) {
       console.error(error.response.data.error)
-      return { success: false }
+
+      if (error.response.status === 409)
+        return { success: false, message: 'username already exists' }
+
+      return {
+        success: false,
+        message: 'something went wrong, please try again'
+      }
     }
   }
 }
