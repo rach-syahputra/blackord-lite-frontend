@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import validate from '../../../utils/validation/validation'
 import { registerSchema } from '../../../utils/validation/register-form'
 import Input from '../../../components/Input'
@@ -100,7 +100,10 @@ const RegisterPage = () => {
 
           <Button type='submit'>Sign Up</Button>
           <p className='text-center'>
-            Already have an account? <a className='text-blue-500'>Login</a>
+            Already have an account?{' '}
+            <Link to='/auth/login' className='text-blue-500'>
+              Login
+            </Link>
           </p>
         </div>
         <div className='flex w-full flex-col gap-4'></div>

@@ -7,6 +7,7 @@ import {
 import HomePage from './view/home/HomePage'
 import RegisterPage from './view/auth/register/RegisterPage'
 import RegisterListenerPage from './view/auth/register/listener/RegisterListenerPage'
+import LoginPage from './view/auth/login/LoginPage'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/auth/register/listener',
     element: <RegisterListenerPage />
+  },
+  {
+    path: '/auth/login',
+    element: <LoginPage />
   }
 ])
 
