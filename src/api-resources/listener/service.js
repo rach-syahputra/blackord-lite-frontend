@@ -12,9 +12,11 @@ const listenerService = {
     } catch (error) {
       console.error(error.response.data.error)
 
-      return {
-        success: false,
-        message: 'something went wrong, please try again'
+      if (response.status === 500) {
+        return {
+          success: false,
+          error: 'something went wrong, please try again'
+        }
       }
     }
   }

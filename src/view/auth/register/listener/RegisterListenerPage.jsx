@@ -77,10 +77,10 @@ const RegisterListenerPage = () => {
         localStorage.removeItem('blackord-user-data')
         navigate('/auth/login')
       } else {
-        setError(registerListener?.message)
+        setError(registerListener?.error)
       }
     } else {
-      setError(registerUser?.message)
+      setError(registerUser?.error)
     }
 
     setLoading(false)

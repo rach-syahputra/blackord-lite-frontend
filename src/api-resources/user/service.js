@@ -12,11 +12,13 @@ const userService = {
       console.error(error.response.data.error)
 
       if (error.response.status === 409)
-        return { success: false, message: 'username already exists' }
+        return { success: false, error: 'username already exists' }
 
-      return {
-        success: false,
-        message: 'something went wrong, please try again'
+      if (error.response.status === 500) {
+        return {
+          success: false,
+          error: 'something went wrong'
+        }
       }
     }
   },
@@ -36,7 +38,7 @@ const userService = {
       console.error(error.response.data.error)
 
       if (error.response.status === 500)
-        return { success: false, message: 'something went wrong' }
+        return { success: false, error: 'something went wrong' }
 
       return {
         success: false,
