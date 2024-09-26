@@ -9,7 +9,7 @@ const Button = ({ children, type = 'button', mode = 'primary', onClick }) => {
 
   return (
     <button
-      className={`${styles} rounded-lg px-4 py-3 text-sm md:text-base`}
+      className={`${styles} rounded-lg px-4 py-2 text-sm md:text-base`}
       onClick={onClick}
       type={type}
     >
