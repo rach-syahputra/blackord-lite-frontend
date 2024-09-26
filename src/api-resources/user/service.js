@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { LOGIN_ROUTE, USER_ROUTE } from './route'
+import Cookies from 'universal-cookie'
 
 const userService = {
   async register(request) {
@@ -24,7 +25,13 @@ const userService = {
     try {
       const response = await axios.post(LOGIN_ROUTE, request)
 
-      if (response.status === 200) return { success: true }
+      if (response.status === 200) {
+        const accessToken = response.data.data.accessToken
+        const cookies = new Cookies()
+        cookies.set('blackordAccessToken', accessToken)
+
+        return { success: true }
+      }
     } catch (error) {
       console.error(error.response.data.error)
 
