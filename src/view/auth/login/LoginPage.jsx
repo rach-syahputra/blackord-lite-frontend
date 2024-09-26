@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import userService from '../../../api-resources/user/service'
 import validate from '../../../utils/validation/validation'
 import { loginSchema } from '../../../utils/validation/login-form'
 import Input from '../../../components/Input'
 import Button from '../../../components/Button'
-import userService from '../../../api-resources/user/service'
+import LoadingButton from '../../../components/LoadingButton'
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
@@ -12,6 +13,7 @@ const LoginPage = () => {
     password: ''
   })
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -28,13 +30,17 @@ const LoginPage = () => {
     }
 
     setError('')
+    setLoading(true)
 
     const loginUser = await userService.login(inputs)
     if (loginUser.success) {
+      setLoading(false)
       navigate('/')
     } else {
       setError(loginUser?.error)
     }
+
+    setLoading(false)
   }
 
   return (
@@ -60,7 +66,12 @@ const LoginPage = () => {
 
           {error && <p className='text-red-500'>{error}</p>}
 
-          <Button type='submit'>Login</Button>
+          {loading ? (
+            <LoadingButton>Logging in...</LoadingButton>
+          ) : (
+            <Button type='submit'>Log in</Button>
+          )}
+
           <p className='text-center'>
             Don't have an account yet?{' '}
             <Link to='/auth/register' className='text-blue-500'>
