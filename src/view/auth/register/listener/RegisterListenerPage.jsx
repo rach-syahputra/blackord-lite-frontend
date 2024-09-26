@@ -12,6 +12,7 @@ import userService from '../../../../api-resources/user/service'
 import listenerService from '../../../../api-resources/listener/service'
 import Button from '../../../../components/Button'
 import ImageInput from '../../../../components/ImageInput'
+import LoadingButton from '../../../../components/LoadingButton'
 
 const RegisterListenerPage = () => {
   const [inputs, setInputs] = useState({
@@ -20,6 +21,7 @@ const RegisterListenerPage = () => {
     image: null
   })
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const [preview, setPreview] = useState('')
   const imageInputRef = useRef(null)
   const navigate = useNavigate()
@@ -66,18 +68,22 @@ const RegisterListenerPage = () => {
       return
     }
 
+    setLoading(true)
+
     const registerUser = await userService.register(userData)
     if (registerUser.success) {
       const registerListener = await listenerService.register(inputs)
       if (registerListener.success) {
         localStorage.removeItem('blackord-user-data')
-        navigate('/')
+        navigate('/auth/login')
       } else {
         setError(registerListener?.message)
       }
     } else {
       setError(registerUser?.message)
     }
+
+    setLoading(false)
   }
 
   return (
@@ -121,7 +127,11 @@ const RegisterListenerPage = () => {
 
           {error && <p className='text-red-500'>{error}</p>}
 
-          <Button type='submit'>Sign Up</Button>
+          {loading ? (
+            <LoadingButton>Signing up..</LoadingButton>
+          ) : (
+            <Button type='submit'>Sign Up</Button>
+          )}
         </div>
         <div className='flex w-full flex-col gap-4'></div>
       </form>
