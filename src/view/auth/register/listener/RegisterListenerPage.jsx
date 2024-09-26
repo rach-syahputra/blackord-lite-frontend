@@ -87,13 +87,13 @@ const RegisterListenerPage = () => {
   }
 
   return (
-    <div className='h-screen p-4'>
+    <main className='h-screen p-4'>
       <form
         className='m-auto flex h-full max-w-xs flex-col items-center justify-center gap-4 md:max-w-sm'
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className='text-xl font-bold'>
-          Sign up as Listener to start listening to epic tunes
+          Sign up as a Listener to start listening to epic tunes
         </h1>
         <div className='flex w-full flex-col gap-4'>
           {preview ? (
@@ -135,7 +135,7 @@ const RegisterListenerPage = () => {
         </div>
         <div className='flex w-full flex-col gap-4'></div>
       </form>
-    </div>
+    </main>
   )
 }
 

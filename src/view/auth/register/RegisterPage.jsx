@@ -46,7 +46,7 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className='h-screen p-4'>
+    <main className='h-screen p-4'>
       <form
         className='m-auto flex h-full max-w-xs flex-col items-center justify-center gap-4 md:max-w-sm'
         onSubmit={handleSubmit}
@@ -108,7 +108,7 @@ const RegisterPage = () => {
         </div>
         <div className='flex w-full flex-col gap-4'></div>
       </form>
-    </div>
+    </main>
   )
 }
 
