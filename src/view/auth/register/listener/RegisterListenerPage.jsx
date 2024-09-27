@@ -94,22 +94,13 @@ const RegisterListenerPage = () => {
           Sign up as a Listener to start listening to epic tunes
         </h1>
         <div className='flex w-full flex-col gap-4'>
-          {preview ? (
-            <figure className='h-[300px] w-full overflow-hidden rounded-md'>
-              <img
-                src={preview}
-                alt='Preview Image'
-                className='h-full w-full object-cover object-center'
-              />
-            </figure>
-          ) : (
-            <ImageInput
-              name='image'
-              onChange={handleChange}
-              onClick={handleImageUploadClick}
-              ref={imageInputRef}
-            />
-          )}
+          <ImageInput
+            preview={preview}
+            name='image'
+            onChange={handleChange}
+            onClick={handleImageUploadClick}
+            ref={imageInputRef}
+          />
 
           {error && <p className='text-red-500'>{error}</p>}
 
