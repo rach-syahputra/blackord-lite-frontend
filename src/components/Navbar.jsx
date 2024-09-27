@@ -1,42 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchCurrentUser,
+  removeCurrentUser
+} from '../redux/slicers/current-user-slicer'
 import Button from './Button'
-import userService from '../api-resources/user/service'
 
 const Navbar = () => {
-  const [user, setUser] = useState({
-    image: '',
-    username: ''
-  })
-  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+  const isLoading = useSelector((state) => state.currentUser.isLoading)
+  const currentUser = useSelector((state) => state.currentUser.data)
 
   useEffect(() => {
-    const getCurrentUser = async () => {
-      setLoading(true)
-      const response = await userService.getCurrentUser()
-
-      if (response.success) {
-        setUser((prev) => ({
-          ...prev,
-          image: response.data.image,
-          username: response.data.username
-        }))
-      }
-
-      setLoading(false)
-    }
-
-    getCurrentUser()
+    if (!currentUser) dispatch(fetchCurrentUser())
   }, [])
 
   return (
     <nav className='flex h-[70px] items-center justify-between'>
       <p className='text-2xl font-bold tracking-wide'>BLACKORD</p>
 
-      {loading ? (
+      {isLoading ? (
         <ProfileSkeleton />
-      ) : user.username ? (
-        <Profile user={user} />
+      ) : currentUser?.username ? (
+        <Profile user={currentUser} />
       ) : (
         <Link to='/auth/login'>
           <Button>Log in</Button>
@@ -79,11 +66,10 @@ const ProfileSkeleton = () => {
 }
 
 const DropDown = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleLogout = async () => {
-    const response = await userService.logout()
-    if (response.success) navigate('/auth/login')
+    dispatch(removeCurrentUser())
   }
 
   return (
