@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeCurrentUser } from '../redux/slicers/current-user-slicer'
 import Button from './Button'
@@ -75,9 +75,11 @@ const ProfileSkeleton = () => {
 
 const DropDown = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     dispatch(removeCurrentUser())
+    navigate('/auth/login')
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import userService from '../../../api-resources/user/service'
 import validate from '../../../utils/validation/validation'
@@ -6,6 +6,8 @@ import { loginSchema } from '../../../utils/validation/login-form'
 import Input from '../../../components/Input'
 import Button from '../../../components/Button'
 import LoadingButton from '../../../components/LoadingButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCurrentUser } from '../../../redux/slicers/current-user-slicer'
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
@@ -14,7 +16,20 @@ const LoginPage = () => {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const currentUser = useSelector((state) => state.currentUser.data)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (currentUser) {
+      setLoading(false)
+      if (currentUser?.artistName) {
+        navigate('/artist')
+      } else {
+        navigate('/')
+      }
+    }
+  }, [currentUser])
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -34,8 +49,7 @@ const LoginPage = () => {
 
     const loginUser = await userService.login(inputs)
     if (loginUser.success) {
-      setLoading(false)
-      navigate('/')
+      dispatch(fetchCurrentUser())
     } else {
       setError(loginUser?.error)
     }
