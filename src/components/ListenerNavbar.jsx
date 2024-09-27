@@ -1,20 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchCurrentUser,
-  removeCurrentUser
-} from '../redux/slicers/current-user-slicer'
+import { removeCurrentUser } from '../redux/slicers/current-user-slicer'
 import Button from './Button'
 
-const Navbar = () => {
-  const dispatch = useDispatch()
+const ListenerNavbar = () => {
   const isLoading = useSelector((state) => state.currentUser.isLoading)
   const currentUser = useSelector((state) => state.currentUser.data)
-
-  useEffect(() => {
-    if (!currentUser) dispatch(fetchCurrentUser())
-  }, [])
 
   return (
     <nav className='flex h-[70px] items-center justify-between'>
@@ -85,4 +77,4 @@ const DropDown = () => {
   )
 }
 
-export default Navbar
+export default ListenerNavbar
