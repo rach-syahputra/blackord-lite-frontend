@@ -1,5 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import HomePage from './view/home/HomePage'
+import ListenerHomePage from './view/listener/Page'
+import ListenerLayout from './view/listener/Layout'
+import ArtistHomePage from './view/artist/Page'
+import ArtistLayout from './view/artist/Layout'
 import RegisterPage from './view/auth/register/RegisterPage'
 import RegisterListenerPage from './view/auth/register/listener/RegisterListenerPage'
 import LoginPage from './view/auth/login/LoginPage'
@@ -13,7 +16,23 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />
+        element: <ListenerLayout />,
+        children: [
+          {
+            path: '/',
+            element: <ListenerHomePage />
+          }
+        ]
+      },
+      {
+        path: '/artist',
+        element: <ArtistLayout />,
+        children: [
+          {
+            path: '/artist',
+            element: <ArtistHomePage />
+          }
+        ]
       }
     ]
   },
@@ -36,6 +55,8 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  // look on current user change
+
   return (
     <>
       <RouterProvider router={router} />
