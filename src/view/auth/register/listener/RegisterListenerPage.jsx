@@ -1,7 +1,5 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { registerSchema } from '../../../../utils/validation/register-form'
 import {
   listenerImageSchema,
@@ -105,24 +103,12 @@ const RegisterListenerPage = () => {
               />
             </figure>
           ) : (
-            <div
-              className='flex h-[300px] w-full cursor-pointer items-center justify-center rounded-md border-2 border-dotted'
+            <ImageInput
+              name='image'
+              onChange={handleChange}
               onClick={handleImageUploadClick}
-            >
-              <div className='flex flex-col gap-2'>
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  size='2x'
-                  className='text-gray-500'
-                />
-                <p className='text-gray-500'>Upload your image</p>
-              </div>
-              <ImageInput
-                name='image'
-                onChange={handleChange}
-                ref={imageInputRef}
-              />
-            </div>
+              ref={imageInputRef}
+            />
           )}
 
           {error && <p className='text-red-500'>{error}</p>}
