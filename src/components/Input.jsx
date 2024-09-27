@@ -7,7 +7,7 @@ const Input = ({ type, name, placeholder, onChange }) => {
       name={name}
       placeholder={placeholder}
       onChange={onChange}
-      className='box-border rounded-md border border-gray-500 p-2 focus:outline-gray-600'
+      className='box-border w-full rounded-md border border-gray-500 p-2 focus:outline-gray-600'
     />
   )
 }
