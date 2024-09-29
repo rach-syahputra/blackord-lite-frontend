@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { removeCurrentUser } from '../../../../redux/slicers/current-user-slicer'
 import {
   albumImageSchema,
   albumSchema
@@ -32,6 +34,7 @@ const AddAlbumPage = () => {
   const [songError, setSongError] = useState('')
   const [preview, setPreview] = useState('')
   const imageInputRef = useRef(null)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleAlbumChange = (e) => {
@@ -125,6 +128,11 @@ const AddAlbumPage = () => {
 
       const success = responses.every((response) => response.success)
       if (success) navigate('/artist/albums')
+    } else {
+      if (albumResponse.statusCode === 401) {
+        const response = await dispatch(removeCurrentUser()).unwrap()
+        if (response.success) navigate('/auth/login')
+      }
     }
 
     setIsLoading(false)
