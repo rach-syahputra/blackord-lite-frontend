@@ -62,8 +62,9 @@ const DropDown = () => {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
-    dispatch(removeCurrentUser())
-    navigate('/auth/login')
+    const response = await dispatch(removeCurrentUser()).unwrap()
+
+    if (response?.success) navigate('/auth/login')
   }
 
   return (
