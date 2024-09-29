@@ -16,14 +16,14 @@ const Header = ({ image }) => {
   )
 }
 
-const Body = ({ title, genre, description }) => {
+const Body = ({ title, genre, totalSong }) => {
   return (
     <div className='flex flex-col gap-1 p-2'>
       <a href='#' className='w-fit text-lg font-bold hover:underline'>
         {title}
       </a>
       <p className='text-sm text-gray-500'>{genre}</p>
-      <p className='line-clamp-3'>{description}</p>
+      <p className='text-sm text-gray-500'>{totalSong} songs</p>
     </div>
   )
 }
@@ -39,7 +39,7 @@ Header.propTypes = {
 Body.propTypes = {
   title: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
+  totalSong: PropTypes.number.isRequired
 }
 
 CardAlbum.Header = Header
