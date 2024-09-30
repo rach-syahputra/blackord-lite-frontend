@@ -10,7 +10,10 @@ const ListenerNavbar = () => {
 
   return (
     <nav className='flex h-[70px] items-center justify-between'>
-      <p className='text-2xl font-bold tracking-wide'>BLACKORD</p>
+      <div className='flex items-center justify-center gap-8'>
+        <p className='text-2xl font-bold tracking-wide'>BLACKORD</p>
+        <Menu />
+      </div>
 
       {isLoading ? (
         <ProfileSkeleton />
@@ -22,6 +25,16 @@ const ListenerNavbar = () => {
         </Link>
       )}
     </nav>
+  )
+}
+
+const Menu = () => {
+  return (
+    <ul className='flex items-center gap-4'>
+      <li>
+        <Link to='/'>Home</Link>
+      </li>
+    </ul>
   )
 }
 
