@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -32,12 +33,16 @@ const Header = ({ children, image, onClick, removeButton }) => {
   )
 }
 
-const Body = ({ title, genre, totalSong }) => {
+const Body = ({ id, title, genre, totalSong }) => {
   return (
     <div className='flex flex-col gap-1 p-2'>
-      <a href='#' className='w-fit text-lg font-bold hover:underline'>
+      <Link
+        to={`/album/${id}`}
+        href='#'
+        className='w-fit text-lg font-bold hover:underline'
+      >
         {title}
-      </a>
+      </Link>
       <p className='text-sm text-gray-500'>{genre}</p>
       <p className='text-sm text-gray-500'>{totalSong} songs</p>
     </div>
@@ -58,7 +63,8 @@ Header.propTypes = {
 Body.propTypes = {
   title: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
-  totalSong: PropTypes.number.isRequired
+  totalSong: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired
 }
 
 CardAlbum.Header = Header
