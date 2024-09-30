@@ -23,7 +23,7 @@ const AlbumsPage = () => {
 
         const albumsWithSongs = await Promise.all(
           await albums.map(async (album) => {
-            const response = await songService.get(album.id)
+            const response = await songService.getFromAlbum(album.id)
 
             const songs = response.data
 

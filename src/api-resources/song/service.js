@@ -27,7 +27,7 @@ const songService = {
     }
   },
 
-  async get(albumId) {
+  async getFromAlbum(albumId) {
     try {
       const response = await axios.get(`${SONG_ROUTE}/albums/${albumId}`)
 
