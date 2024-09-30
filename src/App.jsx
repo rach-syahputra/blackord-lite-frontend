@@ -10,6 +10,7 @@ import RegisterPage from './view/auth/register/RegisterPage'
 import RegisterListenerPage from './view/auth/register/listener/RegisterListenerPage'
 import RegisterArtistPage from './view/auth/register/artist/RegisterArtistPage'
 import LoginPage from './view/auth/login/LoginPage'
+import ArtistDetailPage from './view/listener/artist/detail/Page'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
           {
             path: '/',
             element: <ListenerHomePage />
+          },
+          {
+            path: '/artist/:username',
+            element: <ArtistDetailPage />
           }
         ]
       },

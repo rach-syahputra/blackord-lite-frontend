@@ -68,6 +68,7 @@ const ListenerHomePage = () => {
             artists.map((artist) => (
               <li key={artist.username}>
                 <CardArtist
+                  username={artist.username}
                   name={artist.artistName}
                   bio={artist.bio}
                   image={artist.image}
