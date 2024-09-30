@@ -52,6 +52,24 @@ const albumService = {
     }
   },
 
+  async get(id) {
+    try {
+      const response = await axios.get(`${ALBUM_ROUTE}/${id}`)
+
+      if (response.status === 200)
+        return { success: true, data: response.data.data }
+    } catch (error) {
+      console.error(error.response.data.error)
+
+      if (error.response.status === 500) {
+        return {
+          success: false,
+          error: 'something went wrong, please try again'
+        }
+      }
+    }
+  },
+
   async getAllFromArtist(username) {
     try {
       const response = await axios.get(`${ALBUM_ROUTE}/artists/${username}`)
