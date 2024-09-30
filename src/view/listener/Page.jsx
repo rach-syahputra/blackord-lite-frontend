@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import CardArtist from '../../components/CardArtist'
 import { useEffect } from 'react'
 import artistService from '../../api-resources/artist/service'
 import albumService from '../../api-resources/album/service'
-import CardAlbum from '../../components/CardAlbum'
 import songService from '../../api-resources/song/service'
+import CardArtist from '../../components/CardArtist'
+import CardAlbum from '../../components/CardAlbum'
+import CardLoading from '../../components/CardLoading'
 
 const ListenerHomePage = () => {
   const [artists, setArtists] = useState([])
   const [albums, setAlbums] = useState([])
   const [totalSong, setTotalSong] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getArtistsAndAlbums = async () => {
@@ -53,6 +55,7 @@ const ListenerHomePage = () => {
 
         setArtists(artists)
         setAlbums(AlbumsWithTotalSong)
+        setIsLoading(false)
       }
     }
 
@@ -64,8 +67,16 @@ const ListenerHomePage = () => {
       <section>
         <h1 className='mb-4 text-xl font-bold'>NEW ARTISTS</h1>
         <ul className='grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-3'>
-          {artists &&
-            artists.map((artist) => (
+          {isLoading ? (
+            <>
+              <CardLoading />
+              <CardLoading />
+              <CardLoading />
+              <CardLoading />
+              <CardLoading />
+            </>
+          ) : (
+            artists?.map((artist) => (
               <li key={artist.username}>
                 <CardArtist
                   username={artist.username}
@@ -74,15 +85,25 @@ const ListenerHomePage = () => {
                   image={artist.image}
                 />
               </li>
-            ))}
+            ))
+          )}
         </ul>
       </section>
 
       <section>
         <h1 className='mb-4 text-xl font-bold'>NEW ALBUMS</h1>
+
         <ul className='grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-3'>
-          {albums &&
-            albums.map((album) => (
+          {isLoading ? (
+            <>
+              <CardLoading />
+              <CardLoading />
+              <CardLoading />
+              <CardLoading />
+              <CardLoading />
+            </>
+          ) : (
+            albums?.map((album) => (
               <li key={album.id}>
                 <CardAlbum>
                   <CardAlbum.Header image={album.image} />
@@ -94,7 +115,8 @@ const ListenerHomePage = () => {
                   />
                 </CardAlbum>
               </li>
-            ))}
+            ))
+          )}
         </ul>
       </section>
     </div>
