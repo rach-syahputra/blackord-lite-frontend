@@ -109,34 +109,13 @@ const RegisterArtistPage = () => {
 
           <TextArea name='bio' placeholder='bio' onChange={handleChange} />
 
-          {preview ? (
-            <figure className='h-[300px] w-full overflow-hidden rounded-md'>
-              <img
-                src={preview}
-                alt='Preview Image'
-                className='h-full w-full object-cover object-center'
-              />
-            </figure>
-          ) : (
-            <div
-              className='flex h-[300px] w-full cursor-pointer items-center justify-center rounded-md border-2 border-dotted'
-              onClick={handleImageUploadClick}
-            >
-              <div className='flex flex-col gap-2'>
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  size='2x'
-                  className='text-gray-500'
-                />
-                <p className='text-gray-500'>Upload your image</p>
-              </div>
-              <ImageInput
-                name='image'
-                onChange={handleChange}
-                ref={imageInputRef}
-              />
-            </div>
-          )}
+          <ImageInput
+            preview={preview}
+            name='image'
+            onChange={handleChange}
+            onClick={handleImageUploadClick}
+            ref={imageInputRef}
+          />
 
           {error && <p className='text-red-500'>{error}</p>}
 
