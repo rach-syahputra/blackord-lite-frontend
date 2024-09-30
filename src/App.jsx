@@ -11,6 +11,7 @@ import RegisterListenerPage from './view/auth/register/listener/RegisterListener
 import RegisterArtistPage from './view/auth/register/artist/RegisterArtistPage'
 import LoginPage from './view/auth/login/LoginPage'
 import ArtistDetailPage from './view/listener/artist/detail/Page'
+import AlbumDetailPage from './view/listener/album/detail/Page'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
           {
             path: '/artist/:username',
             element: <ArtistDetailPage />
+          },
+          {
+            path: '/album/:id',
+            element: <AlbumDetailPage />
           }
         ]
       },

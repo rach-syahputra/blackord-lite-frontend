@@ -87,6 +87,7 @@ const ListenerHomePage = () => {
                 <CardAlbum>
                   <CardAlbum.Header image={album.image} />
                   <CardAlbum.Body
+                    id={album.id}
                     title={album.title}
                     genre={album.genre}
                     totalSong={album.totalSong}
