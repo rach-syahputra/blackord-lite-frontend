@@ -6,7 +6,7 @@ const CardAlbum = ({ children }) => {
   return <div className='max-w-80 overflow-hidden rounded-md'>{children}</div>
 }
 
-const Header = ({ children, image, onClick }) => {
+const Header = ({ children, image, onClick, removeButton }) => {
   return (
     <>
       <a href='#' className='group relative'>
@@ -15,13 +15,17 @@ const Header = ({ children, image, onClick }) => {
           alt='product image'
           className='h-[320px] w-full object-cover object-center'
         />
-        <div className='absolute right-0 top-0 h-full w-full bg-black bg-opacity-0 transition-all duration-300 ease-in-out group-hover:bg-opacity-5'></div>
-        <button
-          className='absolute right-2 top-4 hidden px-2 text-gray-700 group-hover:block'
-          onClick={onClick}
-        >
-          <FontAwesomeIcon icon={faTrash} size='lg' />
-        </button>
+        {removeButton && (
+          <>
+            <div className='absolute right-0 top-0 h-full w-full bg-black bg-opacity-0 transition-all duration-300 ease-in-out group-hover:bg-opacity-5'></div>
+            <button
+              className='absolute right-2 top-4 hidden px-2 text-gray-700 group-hover:block'
+              onClick={onClick}
+            >
+              <FontAwesomeIcon icon={faTrash} size='lg' />
+            </button>
+          </>
+        )}
       </a>
       {children}
     </>
@@ -47,7 +51,8 @@ CardAlbum.propTypes = {
 Header.propTypes = {
   children: PropTypes.node,
   image: PropTypes.string.isRequired,
-  openDeleteModal: PropTypes.bool
+  onClick: PropTypes.func,
+  removeButton: PropTypes.bool
 }
 
 Body.propTypes = {
