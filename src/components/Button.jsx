@@ -6,6 +6,7 @@ const Button = ({ children, type = 'button', mode = 'primary', onClick }) => {
   if (mode === 'primary') styles = 'text-white bg-black'
   else if (mode === 'secondary')
     styles = 'text-black bg-white border-2 border-black'
+  else if (mode === 'danger') styles = 'text-white bg-red-500'
 
   return (
     <button
