@@ -30,7 +30,7 @@ const userService = {
       if (response.status === 200) {
         const accessToken = response.data.data.accessToken
         const cookies = new Cookies()
-        cookies.set('blackord-access-token', accessToken)
+        cookies.set('blackord-access-token', accessToken, { path: '/' })
 
         return { success: true }
       }
@@ -50,9 +50,10 @@ const userService = {
   async logout() {
     try {
       const cookies = new Cookies()
-      cookies.remove('blackord-access-token')
+      cookies.remove('blackord-access-token', { path: '/' })
 
       const token = cookies.get('blackord-access-token')
+
       if (token) {
         return {
           success: false,
