@@ -103,6 +103,11 @@ const AddAlbumPage = () => {
       return
     }
 
+    if (songs.length === 0) {
+      setSongError('add at least one song')
+      return
+    }
+
     setIsLoading(true)
 
     const albumResponse = await albumService.add(albumInputs)
