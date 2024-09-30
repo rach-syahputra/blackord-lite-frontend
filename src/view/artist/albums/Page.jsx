@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeCurrentUser } from '../../../redux/slicers/current-user-slicer'
 import albumService from '../../../api-resources/album/service'
 import songService from '../../../api-resources/song/service'
 import Button from '../../../components/Button'
@@ -8,7 +9,10 @@ import CardAlbum from '../../../components/CardAlbum'
 
 const AlbumsPage = () => {
   const [albums, setAlbums] = useState([])
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const currentUser = useSelector((state) => state.currentUser.data)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getAlbumsAndSongs = async () => {
@@ -37,6 +41,21 @@ const AlbumsPage = () => {
     getAlbumsAndSongs()
   }, [])
 
+  const handleDelete = async (albumId) => {
+    const response = await albumService.delete(albumId)
+
+    if (response.success) {
+      setAlbums(albums.filter((album) => album.id !== albumId))
+    }
+
+    if (response.statusCode === 401) {
+      const response = await dispatch(removeCurrentUser()).unwrap()
+      if (response.success) navigate('/auth/login')
+    }
+
+    setOpenDeleteModal(false)
+  }
+
   return (
     <div className='pb-8 pt-4'>
       <Link to='/artist/albums/add'>
@@ -49,7 +68,32 @@ const AlbumsPage = () => {
             albums.map((album) => (
               <li key={album.id}>
                 <CardAlbum>
-                  <CardAlbum.Header image={album.image} />
+                  <CardAlbum.Header
+                    image={album.image}
+                    onClick={() => setOpenDeleteModal(true)}
+                  >
+                    {openDeleteModal && (
+                      <div className='absolute left-0 top-0 flex h-screen w-full items-center justify-center bg-black bg-opacity-10'>
+                        <div className='flex flex-col gap-4 rounded-md bg-white p-4 shadow-sm'>
+                          <p className='font-medium'>Delete this album?</p>
+                          <div className='flex gap-6'>
+                            <Button
+                              mode='secondary'
+                              onClick={() => setOpenDeleteModal(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              mode='danger'
+                              onClick={() => handleDelete(album.id)}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </CardAlbum.Header>
                   <CardAlbum.Body
                     title={album.title}
                     genre={album.genre}

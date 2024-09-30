@@ -113,7 +113,6 @@ const AddAlbumPage = () => {
             albumId: albumResponse.data.id,
             ...song
           }
-          console.log('song data', songData)
 
           const errorMessage = validate(songSchema, songData)
           if (errorMessage) {
