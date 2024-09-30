@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ children, type = 'button', mode = 'primary', onClick }) => {
+const Button = ({
+  children,
+  type = 'button',
+  mode = 'primary',
+  width = 'full',
+  onClick
+}) => {
   let styles
 
   if (mode === 'primary') styles = 'text-white bg-black'
@@ -10,7 +16,7 @@ const Button = ({ children, type = 'button', mode = 'primary', onClick }) => {
 
   return (
     <button
-      className={`${styles} rounded-lg px-4 py-2 text-sm md:text-base`}
+      className={`${styles} w-${width} rounded-lg px-4 py-2 text-sm md:text-base`}
       onClick={onClick}
       type={type}
     >
@@ -23,6 +29,7 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   type: PropTypes.string,
   mode: PropTypes.string,
+  width: PropTypes.string,
   onClick: PropTypes.func
 }
 
