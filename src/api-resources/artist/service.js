@@ -84,6 +84,14 @@ const artistService = {
     } catch (error) {
       console.error(error.response.data.error)
 
+      if (error.response.status === 401) {
+        return {
+          success: false,
+          error: 'unauthenticated',
+          statusCode: 401
+        }
+      }
+
       if (error.response.status === 500) {
         return {
           success: false,
@@ -118,6 +126,14 @@ const artistService = {
       if (response.status === 200) return { success: true }
     } catch (error) {
       console.error(error.response.data.error)
+
+      if (error.response.status === 401) {
+        return {
+          success: false,
+          error: 'unauthenticated',
+          statusCode: 401
+        }
+      }
 
       if (error.response.status === 500) {
         return {

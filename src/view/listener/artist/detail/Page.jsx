@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import artistService from '../../../../api-resources/artist/service'
+import listenerService from '../../../../api-resources/listener/service'
 import DetailLoading from '../../../../components/DetailLoading'
 import Button from '../../../../components/Button'
-import listenerService from '../../../../api-resources/listener/service'
-import { useSelector } from 'react-redux'
 
 const ArtistDetailPage = () => {
   const params = useParams()
@@ -13,6 +13,8 @@ const ArtistDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isFollowed, setIsFollowed] = useState(false)
   const currentUser = useSelector((state) => state.currentUser.data)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getArtist = async () => {
@@ -49,11 +51,21 @@ const ArtistDetailPage = () => {
     if (isFollowed) {
       const response = await artistService.unfollow(username)
 
-      if (response.success) await getSingleFavoriteArtist()
+      if (response?.success) await getSingleFavoriteArtist()
+
+      if (response?.statusCode === 401) {
+        const response = await dispatch(removeCurrentUser()).unwrap()
+        if (response.success) navigate('/auth/login')
+      }
     } else {
       const response = await artistService.follow(username)
 
-      if (response.success) await getSingleFavoriteArtist()
+      if (response?.success) await getSingleFavoriteArtist()
+
+      if (response?.statusCode === 401) {
+        const response = await dispatch(removeCurrentUser()).unwrap()
+        if (response.success) navigate('/auth/login')
+      }
     }
   }
 
