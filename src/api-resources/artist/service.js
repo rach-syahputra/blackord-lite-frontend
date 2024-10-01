@@ -58,6 +58,24 @@ const artistService = {
     }
   },
 
+  async getFollowers(username) {
+    try {
+      const response = await axios.get(`${ARTIST_ROUTE}/${username}/followers`)
+
+      if (response.status === 200)
+        return { success: true, data: response.data.data }
+    } catch (error) {
+      console.error(error.response.data.error)
+
+      if (error.response.status === 500) {
+        return {
+          success: false,
+          error: 'something went wrong, please try again'
+        }
+      }
+    }
+  },
+
   async follow(username) {
     try {
       const token = jwtService.getToken()
