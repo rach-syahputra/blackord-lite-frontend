@@ -54,7 +54,9 @@ const Profile = ({ user }) => {
         <img src={user.image} alt='' className='h-8 w-8 rounded-full' />
         <p>{user.username}</p>
       </button>
-      {openDropDown && <DropDown />}
+      {openDropDown && (
+        <DropDown username={user.username} handleDropDown={handleDropDown} />
+      )}
     </div>
   )
 }
@@ -70,9 +72,14 @@ const ProfileSkeleton = () => {
   )
 }
 
-const DropDown = () => {
+const DropDown = ({ username, handleDropDown }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const handleViewProfile = () => {
+    handleDropDown()
+    navigate(`/profile/${username}`)
+  }
 
   const handleLogout = async () => {
     const response = await dispatch(removeCurrentUser()).unwrap()
@@ -81,9 +88,9 @@ const DropDown = () => {
   }
 
   return (
-    <ul className='absolute right-0 mt-2 flex w-40 flex-col items-center justify-center shadow-sm'>
+    <ul className='absolute right-0 mt-2 flex w-40 flex-col items-center justify-center bg-white shadow-sm'>
       <li className='w-full p-2 text-center transition-all duration-150 hover:bg-gray-50'>
-        View Profile
+        <button onClick={handleViewProfile}>View Profile</button>
       </li>
       <span className='w-full border border-gray-100'></span>
       <li className='w-full p-2 text-center text-red-500 transition-all duration-150 hover:bg-gray-50'>
