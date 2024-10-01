@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './view/Layout'
 import ListenerHomePage from './view/listener/Page'
 import ListenerLayout from './view/listener/Layout'
+import ListenerProfilePage from './view/listener/profile/Page'
 import ArtistHomePage from './view/artist/Page'
 import ArtistLayout from './view/artist/Layout'
 import AlbumsPage from './view/artist/albums/Page'
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
           {
             path: '/',
             element: <ListenerHomePage />
+          },
+          {
+            path: '/profile/:username',
+            element: <ListenerProfilePage />
           },
           {
             path: '/artist/:username',
