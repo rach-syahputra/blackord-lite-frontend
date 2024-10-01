@@ -70,6 +70,29 @@ const userService = {
     }
   },
 
+  async get(username) {
+    try {
+      const response = await axios.get(`${USER_ROUTE}/${username}`)
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          data: response.data.data
+        }
+      }
+    } catch (error) {
+      console.error(error.response.data.error)
+
+      if (error.response.status === 500)
+        return { success: false, message: 'something went wrong' }
+
+      return {
+        success: false,
+        error: error.response.data.error
+      }
+    }
+  },
+
   async getCurrentUser() {
     try {
       const token = jwtService.getToken()
