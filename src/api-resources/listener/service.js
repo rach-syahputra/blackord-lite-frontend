@@ -21,6 +21,24 @@ const listenerService = {
     }
   },
 
+  async get(username) {
+    try {
+      const response = await axios.get(`${LISTENER_ROUTE}/${username}`)
+
+      if (response.status === 200)
+        return { success: true, data: response.data.data }
+    } catch (error) {
+      console.error(error.response.data.error)
+
+      if (error.response.status === 500) {
+        return {
+          success: false,
+          error: 'something went wrong, please try again'
+        }
+      }
+    }
+  },
+
   async getSingleFavoriteArtist(listenerUsername, artistUsername) {
     try {
       const response = await axios.get(
