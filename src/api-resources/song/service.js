@@ -1,12 +1,11 @@
 import axios from 'axios'
-import Cookies from 'universal-cookie'
 import { SONG_ROUTE } from './route'
+import jwtService from '../../utils/token/jwt'
 
 const songService = {
   async add(request) {
     try {
-      const cookies = new Cookies()
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
 
       const response = await axios.post(SONG_ROUTE, request, {
         headers: {

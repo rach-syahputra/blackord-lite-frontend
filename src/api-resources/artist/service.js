@@ -1,8 +1,6 @@
 import axios from 'axios'
-import Cookies from 'universal-cookie'
 import { ARTIST_ROUTE } from './route'
-
-const cookies = new Cookies()
+import jwtService from '../../utils/token/jwt'
 
 const artistService = {
   async register(request) {
@@ -62,7 +60,7 @@ const artistService = {
 
   async follow(username) {
     try {
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
 
       if (!token) {
         return {
@@ -97,7 +95,7 @@ const artistService = {
 
   async unfollow(username) {
     try {
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
 
       if (!token) {
         return {

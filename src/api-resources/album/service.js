@@ -1,13 +1,11 @@
 import axios from 'axios'
-import Cookies from 'universal-cookie'
 import { ALBUM_ROUTE } from './route'
-
-const cookies = new Cookies()
+import jwtService from '../../utils/token/jwt'
 
 const albumService = {
   async add(request) {
     try {
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
 
       if (!token) {
         return {
@@ -30,9 +28,9 @@ const albumService = {
       console.error(error.response.data.error)
 
       if (error.response.status === 401) {
-        const token = cookies.get('blackord-access-token')
+        const token = jwtService.getToken()
         if (token) {
-          cookies.remove('blackord-access-token')
+          jwtService.removeToken()
           // TODO: REFRESH TOKEN
         }
 
@@ -90,7 +88,7 @@ const albumService = {
 
   async delete(albumId) {
     try {
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
 
       if (!token) {
         return {
@@ -111,9 +109,9 @@ const albumService = {
       console.error(error.response.data.error)
 
       if (error.response.status === 401) {
-        const token = cookies.get('blackord-access-token')
+        const token = jwtService.getToken()
         if (token) {
-          cookies.remove('blackord-access-token')
+          jwtService.removeToken()
           // TODO: REFRESH TOKEN
         }
 

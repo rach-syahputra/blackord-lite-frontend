@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { GET_CURRENT_ROUTE, LOGIN_ROUTE, USER_ROUTE } from './route'
-import Cookies from 'universal-cookie'
+import jwtService from '../../utils/token/jwt'
 
 const userService = {
   async register(request) {
@@ -29,8 +29,7 @@ const userService = {
 
       if (response.status === 200) {
         const accessToken = response.data.data.accessToken
-        const cookies = new Cookies()
-        cookies.set('blackord-access-token', accessToken, { path: '/' })
+        jwtService.setToken(accessToken)
 
         return { success: true }
       }
@@ -49,10 +48,9 @@ const userService = {
 
   async logout() {
     try {
-      const cookies = new Cookies()
-      cookies.remove('blackord-access-token', { path: '/' })
+      jwtService.removeToken()
 
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
 
       if (token) {
         return {
@@ -74,8 +72,7 @@ const userService = {
 
   async getCurrentUser() {
     try {
-      const cookies = new Cookies()
-      const token = cookies.get('blackord-access-token')
+      const token = jwtService.getToken()
       const response = await axios.get(GET_CURRENT_ROUTE, {
         headers: {
           Authorization: `Bearer ${token}`
