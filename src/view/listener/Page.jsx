@@ -63,7 +63,7 @@ const ListenerHomePage = () => {
   }, [])
 
   return (
-    <div className='flex flex-col gap-10 pb-8 pt-4'>
+    <div className='flex flex-col gap-10 pb-24 pt-4'>
       <section>
         <h1 className='mb-4 text-xl font-bold'>NEW ARTISTS</h1>
         <ul className='grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-3'>

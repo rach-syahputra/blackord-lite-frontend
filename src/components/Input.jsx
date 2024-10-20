@@ -16,7 +16,7 @@ const Input = ({ type, name, placeholder, value, onChange }) => {
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func
 }

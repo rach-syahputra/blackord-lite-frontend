@@ -95,6 +95,7 @@ const AlbumsPage = () => {
                     )}
                   </CardAlbum.Header>
                   <CardAlbum.Body
+                    id={album.id}
                     title={album.title}
                     genre={album.genre}
                     totalSong={album.songs.length}

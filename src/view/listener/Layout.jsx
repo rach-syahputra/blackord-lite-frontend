@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { removeCurrentUser } from '../../redux/slicers/current-user-slicer'
 import jwtService from '../../utils/token/jwt'
 import ListenerNavbar from '../../components/ListenerNavbar'
-import { removeCurrentUser } from '../../redux/slicers/current-user-slicer'
+import Player from '../../components/Player'
 
 const ListenerLayout = () => {
   const currentUser = useSelector((state) => state.currentUser.data)
@@ -28,6 +29,7 @@ const ListenerLayout = () => {
     <>
       <ListenerNavbar />
       <Outlet />
+      <Player />
     </>
   )
 }

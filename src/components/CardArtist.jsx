@@ -7,7 +7,7 @@ const CardArtist = ({ username, image, name, bio }) => {
       <img
         src={image}
         alt='artist image'
-        className='h-[240px] w-full rounded-md object-cover object-center md:h-[280px]'
+        className='h-[200px] w-full rounded-md object-cover object-center sm:h-[240px] md:h-[280px]'
       />
       <div className='flex flex-col gap-2 p-2'>
         <Link to={`/artist/${username}`} className='font-bold hover:underline'>

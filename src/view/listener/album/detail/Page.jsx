@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setActiveId,
+  setIds,
+  setIsPlaying
+} from '../../../../redux/slicers/player-slicer'
 import albumService from '../../../../api-resources/album/service'
 import songService from '../../../../api-resources/song/service'
 import DetailLoading from '../../../../components/DetailLoading'
@@ -11,6 +17,8 @@ const AlbumDetailPage = () => {
   const [album, setAlbum] = useState(null)
   const [songs, setSongs] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const player = useSelector((state) => state.player)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getAlbum = async () => {
@@ -39,6 +47,16 @@ const AlbumDetailPage = () => {
     getAlbumAndSongs()
   }, [])
 
+  const onPlay = (id) => {
+    if (player.activeId === id && player.isPlaying) {
+      dispatch(setIsPlaying(false))
+    } else {
+      dispatch(setActiveId(id))
+      dispatch(setIds(songs.map((song) => song.id)))
+      dispatch(setIsPlaying(true))
+    }
+  }
+
   return (
     <div className='flex flex-col gap-8 pb-8 pt-4 md:flex-row'>
       {isLoading ? (
@@ -65,6 +83,10 @@ const AlbumDetailPage = () => {
                       no={index + 1}
                       title={song.title}
                       duration={song.duration}
+                      onClick={() => onPlay(song.id)}
+                      isPlaying={
+                        song.id === player.activeId && player.isPlaying
+                      }
                     />
                   </li>
                 ))}

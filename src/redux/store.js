@@ -2,14 +2,23 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import currentUserReducer from './slicers/current-user-slicer'
+import playerReducer from './slicers/player-slicer'
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: ['player']
+}
+
+const playerConfig = {
+  key: 'player',
+  storage,
+  blacklist: ['isPlaying']
 }
 
 const reducer = combineReducers({
-  currentUser: currentUserReducer
+  currentUser: currentUserReducer,
+  player: persistReducer(playerConfig, playerReducer)
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

@@ -26,7 +26,8 @@ const AddAlbumPage = () => {
   })
   const [songInputs, setSongInputs] = useState({
     title: '',
-    duration: ''
+    duration: '',
+    file: null
   })
   const [songs, setSongs] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -64,6 +65,11 @@ const AddAlbumPage = () => {
         ...prev,
         [e.target.name]: e.target.value
       }))
+    } else if (e.target.name === 'file') {
+      setSongInputs((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.files[0]
+      }))
     } else {
       setSongInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
@@ -72,8 +78,11 @@ const AddAlbumPage = () => {
   const handleAddSong = () => {
     const songData = {
       title: songInputs.title,
-      duration: Number(songInputs.duration)
+      duration: Number(songInputs.duration),
+      file: songInputs.file
     }
+
+    console.log(songData)
 
     const errorMessage = validate(addSongSchema, songData)
 
@@ -84,7 +93,8 @@ const AddAlbumPage = () => {
 
       setSongInputs({
         title: '',
-        duration: ''
+        duration: '',
+        file: null
       })
 
       setSongError('')
@@ -114,19 +124,25 @@ const AddAlbumPage = () => {
     if (albumResponse.success) {
       const responses = await Promise.all(
         songs.map(async (song) => {
-          const songData = {
-            albumId: albumResponse.data.id,
-            ...song
-          }
+          const upload = await songService.upload(song.file)
 
-          const errorMessage = validate(songSchema, songData)
-          if (errorMessage) {
-            setSongError(errorMessage)
-            return false
-          }
+          if (upload.success) {
+            const songData = {
+              albumId: albumResponse.data.id,
+              title: song.title,
+              duration: song.duration,
+              songPath: upload.data
+            }
 
-          const response = await songService.add(songData)
-          return response
+            const errorMessage = validate(songSchema, songData)
+            if (errorMessage) {
+              setSongError(errorMessage)
+              return false
+            }
+
+            const response = await songService.add(songData)
+            return response
+          }
         })
       )
 
@@ -190,6 +206,7 @@ const AddAlbumPage = () => {
               value={songInputs.duration.toString()}
               onChange={handleSongChange}
             />
+            <Input name='file' type='file' onChange={handleSongChange} />
             {songError && <p className='text-red-500'>{songError}</p>}
             <Button onClick={handleAddSong}>Add Song</Button>
           </div>

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const CardAlbum = ({ children }) => {
-  return <div className='max-w-80 overflow-hidden rounded-md'>{children}</div>
+  return <div className='w-full overflow-hidden rounded-md'>{children}</div>
 }
 
 const Header = ({ children, image, onClick, removeButton }) => {
@@ -14,7 +14,7 @@ const Header = ({ children, image, onClick, removeButton }) => {
         <img
           src={image}
           alt='product image'
-          className='h-[320px] w-full object-cover object-center'
+          className='h-[200px] w-full object-cover object-center sm:h-[240px] md:h-[280px]'
         />
         {removeButton && (
           <>
