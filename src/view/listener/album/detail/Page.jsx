@@ -58,7 +58,7 @@ const AlbumDetailPage = () => {
   }
 
   return (
-    <div className='flex flex-col gap-8 pb-8 pt-4 md:flex-row'>
+    <div className='flex flex-col gap-8 pb-24 pt-4 md:flex-row'>
       {isLoading ? (
         <DetailLoading />
       ) : (
