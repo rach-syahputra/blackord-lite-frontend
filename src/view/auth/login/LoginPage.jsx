@@ -8,6 +8,7 @@ import Button from '../../../components/Button'
 import LoadingButton from '../../../components/LoadingButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCurrentUser } from '../../../redux/slicers/current-user-slicer'
+import { setIsPlaying } from '../../../redux/slicers/player-slicer'
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
@@ -26,6 +27,7 @@ const LoginPage = () => {
       if (currentUser?.artistName) {
         navigate('/artist')
       } else {
+        dispatch(setIsPlaying(false))
         navigate('/')
       }
     }
